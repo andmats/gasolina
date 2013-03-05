@@ -4,9 +4,24 @@
   </head>
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 
   <body>
-   <font size="-1"><a href="/">Home</a> <a href="/about">About</a></font>
+  	
+   <font size="-1"><a href="/">Home</a> <a href="" id="about">About</a></font>
+   
+   <script>
+ 	$("#about").click( function (event) {
+ 		event.preventDefault();
+	   	$("#dialog" ).dialog({
+	      modal: true,
+	      draggable: false
+	    });
+	});
+	</script>
+
+   
    <div id="everything">
    <center><h1>Property purchase advisor tool</h1></center>
    
@@ -71,24 +86,31 @@
     
     {% if total_interest %}
      
-    <div class="top_distance">
-	    <a href="" id="show_breakdown">Show mortgage breakdown</a>      	
+    <div class="top_distance">     	
 	    <table id="mortgage_breakdown" style="display: none;">
 	        <th class="t4_header" colspan="3">Mortgage breakdown</th>
 	        <tr><th>Month</th><th>Interest paid</th><th>Remaining debt</th></tr>
 	        <tr><td>test</td></tr>
 	    </table>
+	    <a href="" id="show_breakdown">Show mortgage breakdown</a> 
     </div>
     
     <script> 
     	var $showOrHide = $('#show_breakdown');
-    	var $breakDwon = $('#mortgage_breakdown')
+    	var $breakDown = $('#mortgage_breakdown')
     	
-    	$breakDown.click( function (event) {
+    	$showOrHide.click( function (event) {
     		event.preventDefault();
-    		if ( $showOrHide )
-    		$breakDown.show();
-    		$showOrHide.html("Hide mortgage breakdown");
+    		if ( /^show/i.test($showOrHide.html()) )
+    		{
+    			$breakDown.show();
+    			$showOrHide.html("Hide mortgage breakdown");
+    		}
+    		else
+    		{
+    			$breakDown.hide();
+    			$showOrHide.html("Show mortgage breakdown");
+    		}
     	});
    	</script>
     {% endif %}
@@ -110,4 +132,8 @@
    
    </div>
   </body>
+
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
 </html>
