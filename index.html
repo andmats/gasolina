@@ -1,0 +1,97 @@
+<html>  
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <body>
+   <font size="-1"><a href="/">Home</a> <a href="/about">About</a></font>
+   <div id="everything">
+   <center><h1>Property purchase advisor tool</h1></center>
+   
+
+   <div style="margin-top: 50px;">
+   <form action="/?" method="get">
+    <table id="input_table" class="green_table">
+      <th colspan="3" class="t1_header">Rent</th>
+      <tr><td>Current rent:</td><td> <input type="text" name="rent" size="6"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Monthly savings:</td> <td><input type="text" name="savings" size="6"></td><td><a href="/a">[?]</a></td></tr>
+      <th colspan="3" class="t1_header">Mortgage</th>
+      <tr><td>Interest rate:</td><td> <input type="text" name="interest" size="2" value="4.50"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Monthly payments:</td><td> <input type="text" name="mortpayments" size="6"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Monthly savings:</td><td> <input type="text" name="mortsavings" size="6"></td><td><a href="/a">[?]</a></td></tr> 
+      <tr><td>Payments:</td><td>
+      <select name="payment_types">
+	      <option value="monthly">Monthly</option>
+      </select></td></tr>
+      <th colspan="3" class="t1_header">Property</th>
+      <tr><td>Property price:</td><td> <input type="text" name="price" size="7"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td> </td></tr>
+      <tr><td colspan="2"><input type="checkbox" name="public" checked="checked"><font size="-1">Make my results public</font></td></tr>
+      <tr><td><input type="submit" value="Calculate"></td></td>
+     </table>
+    </form>
+  </div>
+  
+    
+    {% if total_interest %}
+        <script>$("#input_table").css('margin-left', 0);</script>    
+        <div>
+        <table class="red_table_brief"> 
+        <th class="t2_header">Results (in brief)</th>
+        <tr><th>Rent</th></tr>
+        <tr><td>Total paid:</td></tr>
+        <tr><td>Duration:</td></tr>
+        <th>Mortgage</th>
+        <tr><td>Total interest paid:</td></tr>
+        <tr><td>Mortgage duration:</td></tr>
+        <tr><th>Sum</th></tr>
+        <tr><td><font color="red">£25252</font></td></tr>
+        </table>
+    {% endif %}
+    
+    <div style="clear:both"></div> <!-- because of the previous floating tables/divs  -->    
+    
+    {% if total_interest %}
+        <table class="red_table_explained">
+        <th class="t2_header">Results (explained)</th>
+        <tr><td>The most cost efficient strategy for you is:
+            <ul>
+            <li>Continue renting for another 23 months.</li>
+            <li>By the end of this period you will have paid a total of £5545 on rent and saved £97924.</li>
+            <li>Using that, you can buy the property by making a mortgage of £250982. </li>
+            <li>You will replay it after 32 years.</li>
+            <li>The total interest you'll pay is £363636.</li>
+            </ul></td></tr>
+        </table>
+        </div>
+    {% endif %}
+    
+    
+    {% if total_interest %}
+    <table id="mortgage_breakdown">
+        <th class="t4_header" colspan="3">Mortgage breakdown</th>
+        <tr><th>Month</th><th>Interest paid</th><th>Remaining debt</th></tr>
+        <tr><td>test</td></tr>
+    </table>
+    {% endif %}
+        
+    <table id="table_recent_calcs">
+        <th class="t3_header" colspan="8">Most recent calculations</th>
+        <tr><th class="t3_header" colspan="2">Rent</th><th class="t3_header" colspan="3">Mortgage</th><th class="t3_header">Property</th><th class="t3_header" colspan="2">Date/Location</tr>
+        <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th><th>Savings</th><th>Price</th><th>Date</th><th>City</th></tr>
+        <th></th></tr>
+        <tr><td>test</td></tr>
+    </table>
+    </div>  
+
+   
+   <div id="footer">
+   <hr>
+   <center><p>Created with Python, Jinja2, jQuery and Google App Engine</p></center>
+   </div>
+   
+   </div>
+  </body>
+</html>

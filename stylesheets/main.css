@@ -1,0 +1,91 @@
+body {
+  	font-family: Helvetica, Verdana, sans-serif;
+}
+
+h1 {
+	font-size:22px;
+}
+
+A:link {text-decoration: none; color: Tomato;}
+A:visited {text-decoration: none;}
+A:active {text-decoration: none;}
+A:hover {text-decoration: none; color: red;}
+
+#everything {
+    margin-left:auto;
+    margin-right:auto;
+    width:39em;
+}
+
+table.green_table {
+	padding: 10px;
+	border:4px solid LightGreen;
+    width:17em; 
+	float: left;
+	clear: left;
+	margin-left:11em;
+}
+
+table.red_table_brief {
+	padding: 10px;
+	border:4px solid Red;
+    float: left;
+    clear: right; 
+	width:17em; 
+	margin-left: 5em;
+}
+
+table.red_table_explained {
+    margin-top:30px;
+	padding: 10px;
+	border:4px solid Red;
+    clear: both; 
+	width:39em; 
+}
+
+#table_recent_calcs {
+    margin-top:30px;
+	padding: 10px;
+	border:4px solid Purple;
+    clear: both; 
+	width: 39em;
+}
+
+#mortgage_breakdown {
+    margin-top:30px;
+	padding: 10px;
+	border:4px solid Blue;
+    clear: both; 
+	width: 39em;
+}
+th.t1_header { 
+	background-color:LightGreen;
+	color:white;
+}
+
+th.t2_header { 
+	background-color:Red;
+	color:white;
+}
+
+th.t3_header { 
+	background-color:Purple;
+	color:white;
+}
+
+th.t4_header { 
+	background-color:Blue;
+	color:white;
+}
+
+.form { display: none; }
+
+#footer {
+    margin-top: 40px;
+    font-size: -1;
+    color:LightGray;
+}
+
+hr {
+    width: 39em;
+}
