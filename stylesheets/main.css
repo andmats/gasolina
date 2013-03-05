@@ -52,10 +52,8 @@ table.red_table_explained {
 }
 
 #mortgage_breakdown {
-    margin-top:30px;
 	padding: 10px;
 	border:4px solid Blue;
-    clear: both; 
 	width: 39em;
 }
 th.t1_header { 
@@ -88,4 +86,9 @@ th.t4_header {
 
 hr {
     width: 39em;
+}
+
+.top_distance {
+	margin-top: 30px;
+    clear: both; 
 }

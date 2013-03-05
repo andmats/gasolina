@@ -46,7 +46,7 @@
         <th>Mortgage</th>
         <tr><td>Total interest paid:</td></tr>
         <tr><td>Mortgage duration:</td></tr>
-        <tr><th>Sum</th></tr>
+        <tr><th>Total "wasted" money</th></tr>
         <tr><td><font color="red">£25252</font></td></tr>
         </table>
     {% endif %}
@@ -70,11 +70,27 @@
     
     
     {% if total_interest %}
-    <table id="mortgage_breakdown">
-        <th class="t4_header" colspan="3">Mortgage breakdown</th>
-        <tr><th>Month</th><th>Interest paid</th><th>Remaining debt</th></tr>
-        <tr><td>test</td></tr>
-    </table>
+     
+    <div class="top_distance">
+	    <a href="" id="show_breakdown">Show mortgage breakdown</a>      	
+	    <table id="mortgage_breakdown" style="display: none;">
+	        <th class="t4_header" colspan="3">Mortgage breakdown</th>
+	        <tr><th>Month</th><th>Interest paid</th><th>Remaining debt</th></tr>
+	        <tr><td>test</td></tr>
+	    </table>
+    </div>
+    
+    <script> 
+    	var $showOrHide = $('#show_breakdown');
+    	var $breakDwon = $('#mortgage_breakdown')
+    	
+    	$breakDown.click( function (event) {
+    		event.preventDefault();
+    		if ( $showOrHide )
+    		$breakDown.show();
+    		$showOrHide.html("Hide mortgage breakdown");
+    	});
+   	</script>
     {% endif %}
         
     <table id="table_recent_calcs">
