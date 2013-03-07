@@ -7,7 +7,7 @@ h1 {
 }
 
 A:link {text-decoration: none; color: Tomato;}
-A:visited {text-decoration: none;}
+A:visited {text-decoration: none; color: Tomato;}
 A:active {text-decoration: none;}
 A:hover {text-decoration: none; color: red;}
 
@@ -81,7 +81,12 @@ th.t4_header {
 #footer {
     margin-top: 40px;
     font-size: -1;
-    color:LightGray;
+    color: #A19F9F; /* lightish gray */
+    text-align: center;
+}
+
+.center_allign {
+	text-align: center;
 }
 
 hr {
@@ -91,4 +96,8 @@ hr {
 .top_distance {
 	margin-top: 30px;
     clear: both; 
+}
+
+.small_font {
+	font-size: small;
 }

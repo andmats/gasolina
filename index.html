@@ -1,15 +1,18 @@
 <html>  
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-  </head>
-  
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-
+  </head>
+  
   <body>
   	
-   <font size="-1"><a href="/">Home</a> <a href="" id="about">About</a></font>
+  <div class="small_font">	
+   | <a href="/">Home</a> |
+   <a href="javascript:void(0);" id="about">About</a> | 
+   <a href="javascript:void(0);" id="report">Report a problem</a> |
+   </div>
    
    <script>
  	$("#about").click( function (event) {
@@ -23,7 +26,7 @@
 
    
    <div id="everything">
-   <center><h1>Property purchase advisor tool</h1></center>
+   <h1 class="center_allign">Property purchase advisor tool</h1>
    
 
    <div style="margin-top: 50px;">
@@ -62,11 +65,11 @@
         <tr><td>Total interest paid:</td></tr>
         <tr><td>Mortgage duration:</td></tr>
         <tr><th>Total "wasted" money</th></tr>
-        <tr><td><font color="red">£25252</font></td></tr>
+        <tr><td style="color:red">£25252</td></tr>
         </table>
     {% endif %}
     
-    <div style="clear:both"></div> <!-- because of the previous floating tables/divs  -->    
+    <div style="clear:both"> </div> <!-- because of the previous floating tables/divs  -->    
     
     {% if total_interest %}
         <table class="red_table_explained">
@@ -119,16 +122,16 @@
         <th class="t3_header" colspan="8">Most recent calculations</th>
         <tr><th class="t3_header" colspan="2">Rent</th><th class="t3_header" colspan="3">Mortgage</th><th class="t3_header">Property</th><th class="t3_header" colspan="2">Date/Location</tr>
         <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th><th>Savings</th><th>Price</th><th>Date</th><th>City</th></tr>
-        <th></th></tr>
         <tr><td>test</td></tr>
     </table>
     </div>  
 
    
-   <div id="footer">
+   <footer id="footer">
    <hr>
-   <center><p>Created with Python, Jinja2, jQuery and Google App Engine</p></center>
-   </div>
+  	<p>Created with <a href="http://www.python.org/">Python</a>, <a href="http://jquery.com">jQuery</a> 
+  		and <a href="https://appengine.google.com/">Google App Engine</a></p>
+   </footer>
    
    </div>
   </body>
