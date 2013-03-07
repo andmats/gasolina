@@ -19,7 +19,9 @@
  		event.preventDefault();
 	   	$("#dialog" ).dialog({
 	      modal: true,
-	      draggable: false
+	      draggable: false,
+	      resizable: false,
+	      width: 800
 	    });
 	});
 	</script>
@@ -133,10 +135,21 @@
   		and <a href="https://appengine.google.com/">Google App Engine</a></p>
    </footer>
    
-   </div>
   </body>
 
-<div id="dialog" title="Basic dialog">
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+<div id="dialog" title="About" style="display: none;">
+  <p>This tool aims at calculating the optimal point in time at which you should get a mortgage, 
+  	  so that you minimize the total amount of money you spend while renting a flat, and the amount you pay
+  	  as interest to the bank for the mortgage.
+  </p>
+  <p>
+  	For example it can be used to decide if it will be more economical to live on rent for 5 years and then
+  	do a mortgage for 15 years, or, to live on rent for 10 years and then get a mortgage for another 10 years, 
+  	but for which you will pay less in interest, since your original principal will be less as you would be saving 
+  	for a longer period before getting the mortgage. 
+  </p>
+  <p>
+  	Ultimately, this tool tells you how to waste as little as possible on rent & mortgage interests.
+  </p>
 </div>
 </html>
