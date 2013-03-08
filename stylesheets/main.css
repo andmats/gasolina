@@ -14,7 +14,7 @@ A:hover {text-decoration: none; color: red;}
 #everything {
     margin-left:auto;
     margin-right:auto;
-    width:39em;
+    width:50em;
 }
 
 table.green_table {
@@ -40,7 +40,7 @@ table.red_table_explained {
 	padding: 10px;
 	border:4px solid Red;
     clear: both; 
-	width:39em; 
+	width:50em; 
 }
 
 #table_recent_calcs {
@@ -48,13 +48,13 @@ table.red_table_explained {
 	padding: 10px;
 	border:4px solid Purple;
     clear: both; 
-	width: 39em;
+	width: 50em;
 }
 
 #mortgage_breakdown {
 	padding: 10px;
 	border:4px solid Blue;
-	width: 39em;
+	width: 50em;
 }
 th.t1_header { 
 	background-color:LightGreen;
@@ -90,7 +90,7 @@ th.t4_header {
 }
 
 hr {
-    width: 39em;
+    width: 50em;
 }
 
 .top_distance {

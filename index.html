@@ -4,6 +4,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   
   <body>
@@ -49,7 +50,7 @@
       <tr><td>Property price:</td><td> <input type="text" name="price" size="7"></td><td><a href="/a">[?]</a></td></tr>
       <tr><td> </td></tr>
       <tr><td colspan="2"><input type="checkbox" name="public" checked="checked"><font size="-1">Make my results public</font></td></tr>
-      <tr><td><input type="submit" value="Calculate"></td></td>
+      <tr><td><input type="submit" value="Calculate"></td>
      </table>
     </form>
   </div>
@@ -91,6 +92,8 @@
     
     {% if total_interest %}
      
+    <div id="chart_div" style="width: 50em; height: 500px;"> </div>
+    
     <div class="top_distance">     	
 	    <table id="mortgage_breakdown" style="display: none;">
 	        <th class="t4_header" colspan="3">Mortgage breakdown</th>
@@ -118,6 +121,7 @@
     		}
     	});
    	</script>
+   	
     {% endif %}
         
     <table id="table_recent_calcs">
@@ -126,9 +130,39 @@
         <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th><th>Savings</th><th>Price</th><th>Date</th><th>City</th></tr>
         <tr><td>test</td></tr>
     </table>
-    </div>  
 
-   
+    
+	<script>
+    google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales'],
+          ['2004',  1463],
+          ['2005', 35],
+          ['2006', 110020],
+          ['2007',  1030]
+        ]);
+
+        var options = {
+          title: 'Expenses chart',
+          vAxis: {
+          	title: "Total cost"
+          },
+          hAxis: {
+          	title: "Months from now"
+          },
+          legend: { position: "none"},
+          curveType: "function"
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+    </div>  
+    
+    
    <footer id="footer">
    <hr>
   	<p>Created with <a href="http://www.python.org/">Python</a>, <a href="http://jquery.com">jQuery</a> 
