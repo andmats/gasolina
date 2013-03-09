@@ -6,6 +6,11 @@ h1 {
 	font-size:22px;
 }
 
+h2 {
+    font-size:18px;
+    font-style: italic;
+}
+
 A:link {text-decoration: none; color: Tomato;}
 A:visited {text-decoration: none; color: Tomato;}
 A:active {text-decoration: none;}

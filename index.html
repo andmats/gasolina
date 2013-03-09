@@ -9,13 +9,14 @@
   
   <body>
   <div class="small_font">	
-   | <a href="/">Home</a> |
+   <a href="/">Home</a> |
    <a href="javascript:void(0);" id="about">About</a> | 
-   <a href="javascript:void(0);" id="report">Report a problem</a> |
+   <a href="javascript:void(0);" id="report">Report a problem</a>
    </div>
 
    <div id="content">
    <h1 class="center_allign">Property purchase advisor tool</h1>
+   <h2 class="center_allign">"How to waste as little as possible on rent & mortgage interest".</h2>
    
 
    <div style="margin-top: 50px;">
@@ -23,19 +24,39 @@
    <form action="/?" method="get">
     <table id="input_table" class="green_table">
       <th colspan="3" class="t1_header">Rent</th>
-      <tr><td>Current rent:</td><td> <input id="rent" type="text" name="rent" size="6" value="{{ rent }}"></td><td><a href="/a">[?]</a></td></tr>
-      <tr><td>Monthly savings:</td> <td><input id="savings" type="text" name="savings" size="6" value="{{ savings }}"></td><td><a href="/a">[?]</a></td></tr>
+      <tr>
+          <td>Current rent:</td>
+          <td><input id="rent" type="text" name="rent" size="6" value="{{ rent }}"></td><td><a href="/a">[?]</a></td>
+      </tr>
+      <tr>
+          <td>Monthly savings:</td> 
+          <td><input id="savings" type="text" name="savings" size="6" value="{{ savings }}"></td><td><a href="/a">[?]</a></td>
+      </tr>
       <th colspan="3" class="t1_header">Mortgage</th>
-      <tr><td>Interest rate:</td><td> <input id="interest" type="text" name="interest" size="2" value="4.50" value="{{ interest }}"></td><td><a href="/a">[?]</a></td></tr>
-      <tr><td>Monthly payments:</td><td> <input id="payments" type="text" name="payments" size="6" value="{{ payments }}"></td><td><a href="/a">[?]</a></td></tr>
+      <tr>
+          <td>Interest rate:</td>
+          <td> <input id="interest" type="text" name="interest" size="2" value="4.50" value="{{ interest }}"></td>
+          <td><a href="/a">[?]</a></td>
+      </tr>
+      <tr>
+          <td>Monthly payments:</td>
+          <td> <input id="payments" type="text" name="payments" size="6" value="{{ payments }}"></td>
+          <td><a href="/a">[?]</a></td>
+      </tr>
       <tr><td>Payments:</td><td>
       <select name="payment_types">
 	      <option value="monthly">Monthly</option>
       </select></td></tr>
       <th colspan="3" class="t1_header">Property</th>
-      <tr><td>Property price:</td><td> <input id="price" type="text" name="price" size="7" value="{{ price }}"></td><td><a href="/a">[?]</a></td></tr>
+      <tr>
+          <td>Property price:</td><td> <input id="price" type="text" name="price" size="7" value="{{ price }}"></td>
+          <td><a href="/a">[?]</a></td>
+      </tr>
       <tr><td> </td></tr>
-      <tr><td colspan="2"><input type="checkbox" name="public" {{ "checked" if public else "" }}><font size="-1">Make my results public</font></td></tr>
+      <tr><td colspan="2">
+            <input type="checkbox" name="public" {{ "checked" if public or (not total_interest) else "" }}>
+            <font size="-1">Make my results public</font>
+       </td></tr>
       <tr><td><input type="submit" value="Calculate"></td>
      </table>
     </form>
@@ -69,6 +90,7 @@
             <li>Using that, you can buy the property by making a mortgage of £250982. </li>
             <li>You will replay it after 32 years.</li>
             <li>The total interest you'll pay is £363636.</li>
+            <li>Minimum total rent and interest: </lit>
             </ul></td></tr>
         </table>
         </div>
@@ -76,9 +98,10 @@
     
     
     {% if total_interest %}
-     
     <div id="chart_div" style="width: 50em; height: 500px;"> </div>
     
+    <p> The chart above shows your total expenses compared to when you get your mortgage, 
+        as you continue to save money while you're renting. </p>
     <div class="top_distance">     	
 	    <table id="mortgage_breakdown" style="display: none;">
 	        <th class="t4_header" colspan="3">Mortgage breakdown</th>
