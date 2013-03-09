@@ -10,22 +10,15 @@ function costAtMonth(m)
 {
     if ( payments - price * interest + savings * m * interest <= 0 )
     {
-        return -1;
+        return NaN;
     }
     if ( payments < 0 || 1+interest < 0 )
-        return 0;
+        return NaN;
         
     return m*rent + payments*Math.log(payments/(payments - price * interest + savings * m * interest))
                             /Math.log(1+interest)
            - price + savings*m;
 }
-
-var test = [];
-for ( var i = 0; i <100*12; i+=120)
-{
-     test.push(costAtMonth(i));
-}
-//alert ( test.join("\n") );
 
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
@@ -34,17 +27,21 @@ function drawChart()
 {
     graph = [['Month', 'Cost']];
     
-    for ( var i = 0; i < 50*12; i+=120)
+    for ( var i = 0; i < 30*12; i+=1)
     {
-        graph.push([i/12.0, costAtMonth(i)]);
-    }   
+        var cost = costAtMonth(i);
+        if ( cost !== NaN )
+        {
+            graph.push([i/12.0, cost]);
+        }   
+    }
      
     var data = google.visualization.arrayToDataTable(graph);        
 	
     var options = {
         title: 'Expenses chart',
         vAxis: {
-	  	    title: "Total cost"
+	  	    title: "Total cost (rent + interest)"
         },
         hAxis: {
 	  	    title: "Years from now"
