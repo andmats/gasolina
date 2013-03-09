@@ -2,59 +2,44 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   
   <body>
-  	
   <div class="small_font">	
    | <a href="/">Home</a> |
    <a href="javascript:void(0);" id="about">About</a> | 
    <a href="javascript:void(0);" id="report">Report a problem</a> |
    </div>
-   
-   <script>
- 	$("#about").click( function (event) {
- 		event.preventDefault();
-	   	$("#dialog" ).dialog({
-	      modal: true,
-	      draggable: false,
-	      resizable: false,
-	      width: 800
-	    });
-	});
-	</script>
 
-   
-   <div id="everything">
+   <div id="content">
    <h1 class="center_allign">Property purchase advisor tool</h1>
    
 
    <div style="margin-top: 50px;">
+       
    <form action="/?" method="get">
     <table id="input_table" class="green_table">
       <th colspan="3" class="t1_header">Rent</th>
-      <tr><td>Current rent:</td><td> <input type="text" name="rent" size="6"></td><td><a href="/a">[?]</a></td></tr>
-      <tr><td>Monthly savings:</td> <td><input type="text" name="savings" size="6"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Current rent:</td><td> <input type="text" name="rent" size="6" value="{{ rent }}"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Monthly savings:</td> <td><input type="text" name="savings" size="6" value="{{ savings }}"></td><td><a href="/a">[?]</a></td></tr>
       <th colspan="3" class="t1_header">Mortgage</th>
-      <tr><td>Interest rate:</td><td> <input type="text" name="interest" size="2" value="4.50"></td><td><a href="/a">[?]</a></td></tr>
-      <tr><td>Monthly payments:</td><td> <input type="text" name="mortpayments" size="6"></td><td><a href="/a">[?]</a></td></tr>
-      <tr><td>Monthly savings:</td><td> <input type="text" name="mortsavings" size="6"></td><td><a href="/a">[?]</a></td></tr> 
+      <tr><td>Interest rate:</td><td> <input type="text" name="interest" size="2" value="4.50" value="{{ interest }}"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Monthly payments:</td><td> <input type="text" name="payments" size="6" value="{{ payments }}"></td><td><a href="/a">[?]</a></td></tr>
       <tr><td>Payments:</td><td>
       <select name="payment_types">
 	      <option value="monthly">Monthly</option>
       </select></td></tr>
       <th colspan="3" class="t1_header">Property</th>
-      <tr><td>Property price:</td><td> <input type="text" name="price" size="7"></td><td><a href="/a">[?]</a></td></tr>
+      <tr><td>Property price:</td><td> <input type="text" name="price" size="7" value="{{ price }}"></td><td><a href="/a">[?]</a></td></tr>
       <tr><td> </td></tr>
-      <tr><td colspan="2"><input type="checkbox" name="public" checked="checked"><font size="-1">Make my results public</font></td></tr>
+      <tr><td colspan="2"><input type="checkbox" name="public" {{ "checked" if public else "" }}><font size="-1">Make my results public</font></td></tr>
       <tr><td><input type="submit" value="Calculate"></td>
      </table>
     </form>
   </div>
-  
     
     {% if total_interest %}
         <script>$("#input_table").css('margin-left', 0);</script>    
@@ -103,25 +88,6 @@
 	    <a href="" id="show_breakdown">Show mortgage breakdown</a> 
     </div>
     
-    <script> 
-    	var $showOrHide = $('#show_breakdown');
-    	var $breakDown = $('#mortgage_breakdown')
-    	
-    	$showOrHide.click( function (event) {
-    		event.preventDefault();
-    		if ( /^show/i.test($showOrHide.html()) )
-    		{
-    			$breakDown.show();
-    			$showOrHide.html("Hide mortgage breakdown");
-    		}
-    		else
-    		{
-    			$breakDown.hide();
-    			$showOrHide.html("Show mortgage breakdown");
-    		}
-    	});
-   	</script>
-   	
     {% endif %}
         
     <table id="table_recent_calcs">
@@ -131,36 +97,7 @@
         <tr><td>test</td></tr>
     </table>
 
-    
-	<script>
-    google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales'],
-          ['2004',  1463],
-          ['2005', 35],
-          ['2006', 110020],
-          ['2007',  1030]
-        ]);
-
-        var options = {
-          title: 'Expenses chart',
-          vAxis: {
-          	title: "Total cost"
-          },
-          hAxis: {
-          	title: "Months from now"
-          },
-          legend: { position: "none"},
-          curveType: "function"
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-    </div>  
+    </div>  <!-- content -->
     
     
    <footer id="footer">
@@ -169,6 +106,11 @@
   		and <a href="https://appengine.google.com/">Google App Engine</a></p>
    </footer>
    
+   
+    {% if total_interest %}
+    <script src="js/results.js"></script>
+    {% endif %}
+    <script src="js/js.js"></script>
   </body>
 
 <div id="dialog" title="About" style="display: none;">

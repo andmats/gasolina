@@ -30,9 +30,21 @@ class MainPage(webapp2.RequestHandler):
         greetings = greetings_query.fetch(10)
 
         interest = self.request.get('interest')
+        rent = self.request.get('rent')
+        savings = self.request.get('savings')
+        payments = self.request.get('payments')
+        price = self.request.get('price')
+        public = self.request.get('public')
+        
         if interest:
             template_values = {
-                'total_interest': 10030
+                'total_interest': 10030,
+                'interest': interest,
+                'rent': rent,
+                'savings': savings,
+                'payments': payments,
+                'price': price,
+                'public': public
             }
         else:
             template_values = {}
