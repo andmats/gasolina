@@ -106,3 +106,7 @@ hr {
 .small_font {
 	font-size: small;
 }
+
+.res {
+    font-weight: bold;
+}

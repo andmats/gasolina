@@ -56,6 +56,8 @@ function drawChart()
         optN = 0;
     }
     
+    showResults(optN);
+    
     for ( var i = 0; i < 30*12; i+=1)
     {
         if ( !haveAlreadyIncludedOptN && optN <= i)
@@ -91,6 +93,20 @@ function drawChart()
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     chart.draw(data, options);
+}
+
+function showResults(optN)
+{
+    var mort_principal = price-savings*optN;
+    var mort_duration = Math.log(payments/(payments-mort_principal*interest))/Math.log(1+interest);
+    
+    $('.total_wasted').text(costAtMonth(optN).toFixed(2));
+    $('.interest_paid').text((payments*mort_duration - mort_principal).toFixed(2));
+    $('.mortgage_duration').text( mort_duration.toFixed(2) );
+    $('.mortage_pricipal').text( mort_principal.toFixed(2) );
+    $('.rent_duration').text(optN.toFixed(2));
+    $('.rent_paid').text((rent*optN).toFixed(2));
+    $('.total_saved').text((savings*optN).toFixed(2));
 }
 
 var $showOrHide = $('#show_breakdown');

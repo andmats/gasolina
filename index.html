@@ -16,7 +16,7 @@
 
    <div id="content">
    <h1 class="center_allign">Property purchase advisor tool</h1>
-   <h2 class="center_allign">"How to waste as little as possible on rent & mortgage interest".</h2>
+   <h2 class="center_allign">"How to waste as little as possible on rent & mortgage interest"</h2>
    
 
    <div style="margin-top: 50px;">
@@ -55,7 +55,7 @@
       <tr><td> </td></tr>
       <tr><td colspan="2">
             <input type="checkbox" name="public" {{ "checked" if public or (not total_interest) else "" }}>
-            <font size="-1">Make my results public</font>
+            <span class="small_font">Make my results public</span>
        </td></tr>
       <tr><td><input type="submit" value="Calculate"></td>
      </table>
@@ -68,13 +68,13 @@
         <table class="red_table_brief"> 
         <th class="t2_header">Results (in brief)</th>
         <tr><th>Rent</th></tr>
-        <tr><td>Total paid:</td></tr>
-        <tr><td>Duration:</td></tr>
+        <tr><td>Total paid:</td><td class="rent_paid res"> </td></tr>
+        <tr><td>Duration:</td><td class="rent_duration res"> </td></tr>
         <th>Mortgage</th>
-        <tr><td>Total interest paid:</td></tr>
-        <tr><td>Mortgage duration:</td></tr>
+        <tr><td>Total interest paid:</td><td class="interest_paid res"> </td></tr>
+        <tr><td>Mortgage duration:</td><td class="mortgage_duration res"> </td></tr>
         <tr><th>Total "wasted" money</th></tr>
-        <tr><td style="color:red">£25252</td></tr>
+        <tr><td class="total_wasted res" style="color:red"> </td></tr>
         </table>
     {% endif %}
     
@@ -85,12 +85,12 @@
         <th class="t2_header">Results (explained)</th>
         <tr><td>The most cost efficient strategy for you is:
             <ul>
-            <li>Continue renting for another 23 months.</li>
-            <li>By the end of this period you will have paid a total of £5545 on rent and saved £97924.</li>
-            <li>Using that, you can buy the property by making a mortgage of £250982. </li>
-            <li>You will replay it after 32 years.</li>
-            <li>The total interest you'll pay is £363636.</li>
-            <li>Minimum total rent and interest: </lit>
+            <li>Continue renting for another <span class="rent_duration res"> </span> months.</li>
+            <li>By the end of this period you will have paid a total of <span class="rent_paid res"> </span> on rent and saved <span class="total_saved res"> </span>.</li>
+            <li>Using that, you can buy the property by making a mortgage of <span class="mortage_pricipal res"> </span>. </li>
+            <li>You will replay it after <span class="mortgage_duration res"> </span> months.</li>
+            <li>The total interest you'll pay is <span class="interest_paid res"> </span>.</li>
+            <li>Minimum total rent and interest: <span class="total_wasted res"> </span></li>
             </ul></td></tr>
         </table>
         </div>
