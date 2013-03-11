@@ -3,7 +3,7 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" /> 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   
@@ -66,15 +66,16 @@
         <script>$("#input_table").css('margin-left', 0);</script>    
         <div>
         <table class="red_table_brief"> 
-        <th class="t2_header">Results (in brief)</th>
-        <tr><th>Rent</th></tr>
+        <th class="t2_header" colspan="2">Results (in brief)</th>
+        <tr><th colspan="2">Rent</th></tr>
         <tr><td>Total paid:</td><td class="rent_paid res"> </td></tr>
         <tr><td>Duration:</td><td class="rent_duration res"> </td></tr>
-        <th>Mortgage</th>
+        <th colspan="2">Mortgage</th>
         <tr><td>Total interest paid:</td><td class="interest_paid res"> </td></tr>
         <tr><td>Mortgage duration:</td><td class="mortgage_duration res"> </td></tr>
-        <tr><th>Total "wasted" money</th></tr>
-        <tr><td class="total_wasted res" style="color:red"> </td></tr>
+        <tr><td colspan="2"> </td></tr>
+        <tr><th colspan="2">Total "wasted" money</th></tr>
+        <tr><td colspan="2" class="total_wasted res center_allign" style="color:red"> </td></tr>
         </table>
     {% endif %}
     
@@ -103,12 +104,20 @@
     <p> The chart above shows your total expenses compared to when you get your mortgage, 
         as you continue to save money while you're renting. </p>
     <div class="top_distance">     	
+        <a href="javascript:void(0);" id="show_breakdown">Show mortgage breakdown</a> 
 	    <table id="mortgage_breakdown" style="display: none;">
-	        <th class="t4_header" colspan="3">Mortgage breakdown</th>
-	        <tr><th>Month</th><th>Interest paid</th><th>Remaining debt</th></tr>
-	        <tr><td>test</td></tr>
+    	    <thead>
+    	        <th class="t4_header" colspan="5">Mortgage breakdown</th>
+    	        <tr><th>Month</th>
+    	            <th>Interest</th>
+    	            <th>Principal</th>
+    	            <th>Cumulative interest paid</th>
+    	            <th>Remaining debt</th>
+    	        </tr>
+    	    </thead>
+    	    <tbody/>
 	    </table>
-	    <a href="" id="show_breakdown">Show mortgage breakdown</a> 
+        <a href="javascript:void(0);" id="hide_breakdown_under" style="display: none;">Hide mortgage breakdown</a> 
     </div>
     
     {% endif %}
@@ -122,33 +131,33 @@
 
     </div>  <!-- content -->
     
-    
    <footer id="footer">
    <hr>
   	<p>Created with <a href="http://www.python.org/">Python</a>, <a href="http://jquery.com">jQuery</a> 
   		and <a href="https://appengine.google.com/">Google App Engine</a></p>
    </footer>
    
-   
+   <div id="dialog" title="About" style="display: none;">
+      <p>
+          This tool serves as a <b>theoritical model</b> aiming at calculating the optimal point in time at which one 
+          should get a mortgage, so that they minimize the total amount of money they spend while renting a flat, 
+          and the amount they pay as interest to the bank for the mortgage.
+      </p>
+      <p>
+        For example it can be used to decide if it will be more economical to live on rent for 5 years and then
+        do a mortgage for 15 years, or, to live on rent for 10 years and then get a mortgage for another 10 years, 
+        but for which less will be paid in interest, since the original loan amount will be less given that
+        the savings one accumulates while renting a flat are spent torwards the purchase of a property. 
+      </p>
+      <p>
+        Ultimately, this tool demonstrates how to waste as little as possible on rent & mortgage interests.
+      </p>
+    </div>
+    
     {% if total_interest %}
     <script src="js/results.js"></script>
     {% endif %}
     <script src="js/js.js"></script>
   </body>
 
-<div id="dialog" title="About" style="display: none;">
-  <p>This tool aims at calculating the optimal point in time at which you should get a mortgage, 
-  	  so that you minimize the total amount of money you spend while renting a flat, and the amount you pay
-  	  as interest to the bank for the mortgage.
-  </p>
-  <p>
-  	For example it can be used to decide if it will be more economical to live on rent for 5 years and then
-  	do a mortgage for 15 years, or, to live on rent for 10 years and then get a mortgage for another 10 years, 
-  	but for which you will pay less in interest, since your original principal will be less as you would be saving 
-  	for a longer period before getting the mortgage. 
-  </p>
-  <p>
-  	Ultimately, this tool tells you how to waste as little as possible on rent & mortgage interests.
-  </p>
-</div>
 </html>

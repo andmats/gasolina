@@ -4,6 +4,9 @@ $("#about").click( function (event) {
       modal: true,
       draggable: false,
       resizable: false,
-      width: 800
+      width: 800,
+      open: function() {
+          $(this).parent().css("top","200px"); 
+      }
     });
 });

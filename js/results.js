@@ -6,6 +6,25 @@ var price = parseFloat($('#price').val());
 var payments = parseFloat($('#payments').val());
 
 //alert (interest + " " + rent + " " + savings + " " + price + " " + payments);
+
+(function main()
+{
+    var optN = optimalN();
+    
+    if ( optN === NaN || optN < 0)
+    {
+        optN = 0;
+    }
+    
+    showResults(optN);
+
+    drawChart.optN = optN;
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+
+})();
+
+
 function costAtMonth(m)
 {
     if ( payments - price * interest + savings * m * interest <= 0 )
@@ -30,15 +49,23 @@ function optimalN()
              );
 }
 
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-
 function pluralOrNot(x, str)
 {
     if ( x === 1 )
         return x + " " + str;
     return x + " " + str + "s";
 }
+
+function getXAxisRange(optN)
+{
+    if ( optN < 20*12 )
+    {
+        return 20*12;
+    }
+
+    return optN + 5*12;    
+}
+
 function drawChart() 
 {
     var data = new google.visualization.DataTable();
@@ -48,17 +75,11 @@ function drawChart()
     data.addColumn({type:'string', role:'annotation'}); // annotation role col.
     data.addColumn({type:'string', role:'annotationText'});
     
-    var optN = optimalN();
+    var optN = drawChart.optN;
     var haveAlreadyIncludedOptN = false;
-
-    if ( optN === NaN || optN < 0)
-    {
-        optN = 0;
-    }
+    var upToMonths = getXAxisRange(optN);
     
-    showResults(optN);
-    
-    for ( var i = 0; i < 30*12; i+=1)
+    for ( var i = 0; i < upToMonths; i+=1)
     {
         if ( !haveAlreadyIncludedOptN && optN <= i)
         {
@@ -98,30 +119,75 @@ function drawChart()
 function showResults(optN)
 {
     var mort_principal = price-savings*optN;
-    var mort_duration = Math.log(payments/(payments-mort_principal*interest))/Math.log(1+interest);
+    var mort_duration = Math.ceil(Math.log(payments/(payments-mort_principal*interest))/Math.log(1+interest));
+    
+    populateBreakDownTable.mort_principal = mort_principal;
     
     $('.total_wasted').text(costAtMonth(optN).toFixed(2));
     $('.interest_paid').text((payments*mort_duration - mort_principal).toFixed(2));
-    $('.mortgage_duration').text( mort_duration.toFixed(2) );
+    $('.mortgage_duration').text( mort_duration );
     $('.mortage_pricipal').text( mort_principal.toFixed(2) );
-    $('.rent_duration').text(optN.toFixed(2));
+    $('.rent_duration').text(optN);
     $('.rent_paid').text((rent*optN).toFixed(2));
     $('.total_saved').text((savings*optN).toFixed(2));
 }
 
+
+var $showOrHideUnder = $('#hide_breakdown_under');
 var $showOrHide = $('#show_breakdown');
 var $breakDown = $('#mortgage_breakdown')
 
-$showOrHide.click( function (event) {
+$showOrHideUnder.click( function (event) 
+{
+    $breakDown.fadeOut();
+    $showOrHide.html("Show mortgage breakdown");
+    $showOrHideUnder.fadeOut();
+});
+
+$showOrHide.click( function (event)
+{
     event.preventDefault();
     if ( /^show/i.test($showOrHide.html()) )
     {
-        $breakDown.show();
+        populateBreakDownTable();
+        $breakDown.fadeIn();
         $showOrHide.html("Hide mortgage breakdown");
+        $showOrHideUnder.fadeIn();
     }
     else
     {
-        $breakDown.hide();
+        $breakDown.fadeOut();
         $showOrHide.html("Show mortgage breakdown");
+        $showOrHideUnder.fadeOut();
     }
 });
+
+function populateBreakDownTable()
+{
+    $breakDown.find('tbody').html("");
+
+    var stillOwing = populateBreakDownTable.mort_principal;
+    var totalInterestPaid = 0;
+    var i = 0;
+    while (stillOwing > 0 )
+    {
+        var interestForMonth = interest*stillOwing;
+        var principal = payments - interest*stillOwing;
+        totalInterestPaid += interestForMonth;
+        stillOwing -= principal;
+        
+        if ( payments - interest*stillOwing <= 0 )
+        {
+            alert("That property is too hot for you, find something cheaper!");
+            return;
+        }
+        $breakDown.find('tbody').last().append('<tr>'
+                    + '<td>' + i + '</td>'
+                    + '<td>' + interestForMonth.toFixed(2) + '</td>'
+                    + '<td>' + principal.toFixed(2) + '</td>'
+                    + '<td>' + totalInterestPaid.toFixed(2) + '</td>'
+                    + '<td>' + ( stillOwing < 0 ? 0 :stillOwing.toFixed(2)) + '</td>'
+                    +'</tr>'); 
+        ++i;
+    }
+}
