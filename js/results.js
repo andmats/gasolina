@@ -9,6 +9,19 @@ var payments = parseFloat($('#payments').val());
 
 (function main()
 {
+    //asuming you saving for 100 years...
+    if (  payments - (price - savings*100)* interest  <= 0 )
+    {
+        alert("That property is too hot for you, find something cheaper!");
+        return;
+    }
+    
+    if ( payments <= 0 || 1+interest < 1 || price < 0)
+    {
+        alert("Payments, interest and property price have to be positive, please try again.");
+        return ;
+    }
+
     var optN = optimalN();
     
     if ( optN === NaN || optN < 0)
@@ -27,20 +40,24 @@ var payments = parseFloat($('#payments').val());
 
 function costAtMonth(m)
 {
-    if ( payments - price * interest + savings * m * interest <= 0 )
-    {
-        return NaN;
-    }
-    if ( payments < 0 || 1+interest < 0 )
-        return NaN;
+    if ( savings*m >= price  || interest <= 0)
+        return m*rent;
         
-    return m*rent + payments*Math.log(payments/(payments - price * interest + savings * m * interest))
-                            /Math.log(1+interest)
-           - price + savings*m;
+    var cost =  m*rent + payments*Math.log(payments/(payments - price * interest + savings * m * interest))
+                                / Math.log(1+interest)
+            - price + savings*m;
+    
+    return cost;
 }
 
 function optimalN()
 {
+    if ( rent == 0 )
+        return 100*12 // life expectation should be less for most users of this app
+        
+    if ( savings == 0 || interest == 0 )
+        return 0;
+    
     return  parseInt(
                 (price * interest * (rent + savings) 
                 - (rent + savings)*Math.log(1+interest)
@@ -118,9 +135,11 @@ function drawChart()
 
 function showResults(optN)
 {
-    var mort_principal = price-savings*optN;
-    var mort_duration = Math.ceil(Math.log(payments/(payments-mort_principal*interest))/Math.log(1+interest));
-    
+    var mort_principal = price-savings*optN > 0 ? price-savings*optN : 0 ;
+    var mort_duration =  interest == 0 ? Math.ceil(mort_principal / payments)
+                     : Math.ceil(Math.log(payments/(payments-mort_principal*interest))
+                                /Math.log(1+interest));
+
     populateBreakDownTable.mort_principal = mort_principal;
     
     $('.total_wasted').text(costAtMonth(optN).toFixed(2));
@@ -168,7 +187,7 @@ function populateBreakDownTable()
 
     var stillOwing = populateBreakDownTable.mort_principal;
     var totalInterestPaid = 0;
-    var i = 0;
+    var i = 1;
     while (stillOwing > 0 )
     {
         var interestForMonth = interest*stillOwing;
@@ -178,7 +197,7 @@ function populateBreakDownTable()
         
         if ( payments - interest*stillOwing <= 0 )
         {
-            alert("That property is too hot for you, find something cheaper!");
+            alert("Oh that property is too hot for you, find something cheaper!");
             return;
         }
         $breakDown.find('tbody').last().append('<tr>'

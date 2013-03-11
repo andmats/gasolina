@@ -35,7 +35,7 @@
       <th colspan="3" class="t1_header">Mortgage</th>
       <tr>
           <td>Interest rate:</td>
-          <td> <input id="interest" type="text" name="interest" size="2" value="4.50" value="{{ interest }}"></td>
+          <td> <input id="interest" type="text" name="interest" size="2" value="{{ 4.50 if interest is not defined else interest}}"></td>
           <td><a href="/a">[?]</a></td>
       </tr>
       <tr>
@@ -147,7 +147,7 @@
         For example it can be used to decide if it will be more economical to live on rent for 5 years and then
         do a mortgage for 15 years, or, to live on rent for 10 years and then get a mortgage for another 10 years, 
         but for which less will be paid in interest, since the original loan amount will be less given that
-        the savings one accumulates while renting a flat are spent torwards the purchase of a property. 
+        the savings one accumulates while renting a flat are spent towards the purchase of a property. 
       </p>
       <p>
         Ultimately, this tool demonstrates how to waste as little as possible on rent & mortgage interests.
