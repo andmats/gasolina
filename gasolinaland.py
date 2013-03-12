@@ -12,11 +12,15 @@ import os
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-class Greeting(db.Model):
-  """Models an individual Guestbook entry with an author, content, and date."""
-  author = db.StringProperty()
-  content = db.StringProperty(multiline=True)
-  date = db.DateTimeProperty(auto_now_add=True)
+class Calculation(db.Model):
+  rent = db.StringProperty()
+  savings = db.StringProperty(multiline=True)
+  interest = db.DateTimeProperty(auto_now_add=True)
+  payments =
+  price = 
+  public =
+  datetime =
+  country = 
 
 def guestbook_key(guestbook_name=None):
   """Constructs a Datastore key for a Guestbook entity with guestbook_name."""

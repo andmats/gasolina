@@ -66,7 +66,7 @@ function optimalN()
              );
 }
 
-function pluralOrNot(x, str)
+function pluralWithS(x, str)
 {
     if ( x === 1 )
         return x + " " + str;
@@ -101,8 +101,7 @@ function drawChart()
         if ( !haveAlreadyIncludedOptN && optN <= i)
         {
             data.addRow([optN/12.0, costAtMonth(optN), "Optimal", 
-                        "Optimal time to get the mortgage from now: " + pluralOrNot(Math.floor(optN/12), "year")
-                        + " and " + pluralOrNot(optN%12, "month")]);
+                        "Optimal time to get the mortgage from now: " + convertToYears(optN)]);
             haveAlreadyIncludedOptN = true;
             
             if ( i == optN )
@@ -118,7 +117,7 @@ function drawChart()
     }
 	
     var options = {
-        title: 'Expenses chart',
+        title: 'When to buy the property: Expenses chart',
         vAxis: {
 	  	    title: "Total cost (rent + interest)"
         },
@@ -133,22 +132,37 @@ function drawChart()
     chart.draw(data, options);
 }
 
+function convertToYears(months)
+{
+    return pluralWithS(Math.floor(months/12), "year")
+           + (months%12 > 0 ? (" and " + pluralWithS(months%12, "month")) : "" )
+}
+
+function numberWithCommas(n) 
+{
+    var parts=n.toString().split(".");
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+}
+
 function showResults(optN)
 {
     var mort_principal = price-savings*optN > 0 ? price-savings*optN : 0 ;
     var mort_duration =  interest == 0 ? Math.ceil(mort_principal / payments)
                      : Math.ceil(Math.log(payments/(payments-mort_principal*interest))
                                 /Math.log(1+interest));
-
+    var mort_duration_real =  interest == 0 ? (mort_principal / payments)
+                     :         (Math.log(payments/(payments-mort_principal*interest))
+                                /Math.log(1+interest));
+                                
     populateBreakDownTable.mort_principal = mort_principal;
     
-    $('.total_wasted').text(costAtMonth(optN).toFixed(2));
-    $('.interest_paid').text((payments*mort_duration - mort_principal).toFixed(2));
-    $('.mortgage_duration').text( mort_duration );
-    $('.mortage_pricipal').text( mort_principal.toFixed(2) );
-    $('.rent_duration').text(optN);
-    $('.rent_paid').text((rent*optN).toFixed(2));
-    $('.total_saved').text((savings*optN).toFixed(2));
+    $('.total_wasted').text(numberWithCommas(costAtMonth(optN).toFixed(2)));
+    $('.interest_paid').text(numberWithCommas((payments*mort_duration_real - mort_principal).toFixed(2)));
+    $('.mortgage_duration').text( convertToYears(mort_duration) );
+    $('.mortage_pricipal').text( numberWithCommas( mort_principal.toFixed(2)) );
+    $('.rent_duration').text(convertToYears(optN));
+    $('.rent_paid').text(numberWithCommas((rent*optN).toFixed(2)));
+    $('.total_saved').text(numberWithCommas((savings*optN).toFixed(2)));
 }
 
 
@@ -202,10 +216,10 @@ function populateBreakDownTable()
         }
         $breakDown.find('tbody').last().append('<tr>'
                     + '<td>' + i + '</td>'
-                    + '<td>' + interestForMonth.toFixed(2) + '</td>'
-                    + '<td>' + principal.toFixed(2) + '</td>'
-                    + '<td>' + totalInterestPaid.toFixed(2) + '</td>'
-                    + '<td>' + ( stillOwing < 0 ? 0 :stillOwing.toFixed(2)) + '</td>'
+                    + '<td>' + numberWithCommas(interestForMonth.toFixed(2)) + '</td>'
+                    + '<td>' + numberWithCommas(principal.toFixed(2)) + '</td>'
+                    + '<td>' + numberWithCommas(totalInterestPaid.toFixed(2)) + '</td>'
+                    + '<td>' + ( stillOwing < 0 ? 0 :numberWithCommas(stillOwing.toFixed(2))) + '</td>'
                     +'</tr>'); 
         ++i;
     }
