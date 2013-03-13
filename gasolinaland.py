@@ -13,26 +13,27 @@ jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class Calculation(db.Model):
-  rent = db.StringProperty()
-  savings = db.StringProperty(multiline=True)
-  interest = db.DateTimeProperty(auto_now_add=True)
-  payments =
-  price = 
-  public =
-  datetime =
-  country = 
+    rent = db.FloatProperty()
+    savings = db.FloatProperty()
+    interest = db.FloatProperty()
+    payments = db.FloatProperty()
+    price =  db.FloatProperty()
+    public = db.BooleanProperty()
+    city = db.StringProperty()
+    datetime = db.DateTimeProperty(auto_now_add=True)
 
-def guestbook_key(guestbook_name=None):
-  """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
-  return db.Key.from_path('Guestbook', guestbook_name or 'default_guestbook')
+def mortgage_advisor_key():
+    return db.Key.from_path('MortgageAdvisor', 'mortgage_advisor')
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        guestbook_name=self.request.get('guestbook_name')
-        greetings_query = Greeting.all().ancestor(
-            guestbook_key(guestbook_name)).order('-date')
-        greetings = greetings_query.fetch(10)
-
+        calcs = db.GqlQuery("SELECT * "
+                            "FROM Calculation "
+                            "WHERE ANCESTOR IS :1 "
+                            "AND public = TRUE " 
+                            "ORDER BY datetime DESC LIMIT 20",
+                            mortgage_advisor_key())
+        
         interest = self.request.get('interest')
         rent = self.request.get('rent')
         savings = self.request.get('savings')
@@ -40,39 +41,34 @@ class MainPage(webapp2.RequestHandler):
         price = self.request.get('price')
         public = self.request.get('public')
         
-        if interest:
+        if price:
             template_values = {
-                'total_interest': 10030,
+                'show_results': True,
                 'interest': interest,
                 'rent': rent,
                 'savings': savings,
                 'payments': payments,
                 'price': price,
-                'public': public
+                'public': public,
+                'calculations': calcs
             }
         else:
-            template_values = {}
-				
+            template_values = {'calculations': calcs}
+
         template = jinja_environment.get_template('index.html')
         self.response.out.write(template.render(template_values))
-        
-class Guestbook(webapp2.RequestHandler):
-  def post(self):
-    # We set the same parent key on the 'Greeting' to ensure each greeting is in
-    # the same entity group. Queries across the single entity group will be
-    # consistent. However, the write rate to a single entity group should
-    # be limited to ~1/second.
-    guestbook_name = self.request.get('guestbook_name')
-    greeting = Greeting(parent=guestbook_key(guestbook_name))
 
-    if users.get_current_user():
-      greeting.author = users.get_current_user().nickname()
+        if price:
+            calc = Calculation( parent = mortgage_advisor_key() )    
+            calc.interest = float(interest)
+            calc.rent = float(rent)
+            calc.savings = float(savings)
+            calc.payments = float(payments)
+            calc.price = float(price)
+            calc.public = True if public == "on" else False
+            calc.city = self.request.get('X-AppEngine-City')
+            
+            calc.put()
 
-    greeting.content = self.request.get('content')
-    greeting.put()
-    self.redirect('/?' + urllib.urlencode({'guestbook_name': guestbook_name}))
-
-
-app = webapp2.WSGIApplication([('/', MainPage),
-                               ('/sign', Guestbook)],
+app = webapp2.WSGIApplication([('/', MainPage)],
                               debug=True)

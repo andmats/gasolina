@@ -54,7 +54,7 @@
       </tr>
       <tr><td> </td></tr>
       <tr><td colspan="2">
-            <input type="checkbox" name="public" {{ "checked" if public or (not total_interest) else "" }}>
+            <input type="checkbox" name="public" {{ "checked" if public or (not show_results) else "" }}>
             <span class="small_font">Make my results public</span>
        </td></tr>
       <tr><td><input type="submit" value="Calculate"></td>
@@ -62,7 +62,7 @@
     </form>
   </div>
     
-    {% if total_interest %}
+    {% if show_results %}
         <script>$("#input_table").css('margin-left', 0);</script>    
         <div>
         <table class="red_table_brief"> 
@@ -81,7 +81,7 @@
     
     <div style="clear:both"> </div> <!-- because of the previous floating tables/divs  -->    
     
-    {% if total_interest %}
+    {% if show_results %}
         <table class="red_table_explained">
         <th class="t2_header">Results (explained)</th>
         <tr><td>The most cost efficient strategy for you is:
@@ -98,7 +98,7 @@
     {% endif %}
     
     
-    {% if total_interest %}
+    {% if show_results %}
     <div id="chart_div" style="width: 50em; height: 500px;"> </div>
     
     <p> The chart above shows your total expenses compared to when you get your mortgage, 
@@ -121,12 +121,17 @@
     </div>
     
     {% endif %}
-        
+    {{calculations}}    
     <table id="table_recent_calcs">
-        <th class="t3_header" colspan="8">Most recent calculations</th>
-        <tr><th class="t3_header" colspan="2">Rent</th><th class="t3_header" colspan="3">Mortgage</th><th class="t3_header">Property</th><th class="t3_header" colspan="2">Date/Location</tr>
-        <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th><th>Savings</th><th>Price</th><th>Date</th><th>City</th></tr>
-        <tr><td>test</td></tr>
+        <th class="t3_header" colspan="7">Most recent calculations</th>
+        <tr><th class="t3_header" colspan="2">Rent</th><th class="t3_header" colspan="2">Mortgage</th><th class="t3_header">Property</th><th class="t3_header" colspan="2">Date/Location</tr>
+        <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th>
+            <th>Price</th><th>Date</th><th>City</th></tr>
+        
+        {% for c in calculations %}
+        <tr><td>{{c.rent}}</td><td>{{c.savings}}</td><td>{{c.interest}}</td><td>{{c.payments}}</td>
+            <td>{{c.price}}</td><td>{{c.datetime.strftime('%Y-%m-%d')}}</td><td>{{c.city}}</td></tr>
+        {% endfor %}
     </table>
 
     </div>  <!-- content -->
@@ -154,7 +159,7 @@
       </p>
     </div>
     
-    {% if total_interest %}
+    {% if show_results %}
     <script src="js/results.js"></script>
     {% endif %}
     <script src="js/js.js"></script>

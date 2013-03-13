@@ -10,6 +10,13 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Calculation
+  ancestor: yes
+  properties:
+  - name: public
+  - name: datetime
+    direction: desc
+
 - kind: Greeting
   ancestor: yes
   properties:
