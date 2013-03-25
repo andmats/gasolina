@@ -129,8 +129,13 @@
             <th>Price</th><th>Date</th><th>City</th></tr>
         
         {% for c in calculations %}
-        <tr><td>{{c.rent}}</td><td>{{c.savings}}</td><td>{{c.interest}}</td><td>{{c.payments}}</td>
-            <td>{{c.price}}</td><td>{{c.datetime.strftime('%Y-%m-%d')}}</td><td>{{c.city}}</td></tr>
+        <tr><td>{{(c.rent~"") | number_format}}</td>
+        	<td>{{(c.savings~"") | number_format}}</td>
+        	<td>{{(c.interest~"") | number_format}}</td>
+        	<td>{{(c.payments~"") | number_format}}</td>
+            <td>{{(c.price ~ "") | number_format}}</td>
+            <td>{{c.datetime.strftime('%Y-%m-%d')}}</td>
+            <td>{{c.city}}</td></tr>
         {% endfor %}
     </table>
 

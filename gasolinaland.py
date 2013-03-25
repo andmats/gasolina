@@ -1,7 +1,7 @@
-import cgi
 import datetime
-import urllib
 import webapp2
+import re
+import locale
 
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -9,8 +9,16 @@ from google.appengine.api import users
 import jinja2
 import os
 
-jinja_environment = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+def number_filter(x, sep=',', dot='.'):
+    num, _, frac = str(x).partition(dot)
+    num = re.sub(r'(\d{3})(?=\d)', r'\1'+sep, num[::-1])[::-1]
+    if frac:
+        num += dot + frac
+    return num
+
+jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
+jinja_environment.filters['number_format'] = number_filter
 
 class Calculation(db.Model):
     rent = db.FloatProperty()
