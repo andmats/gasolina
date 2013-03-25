@@ -12,7 +12,7 @@ var payments = parseFloat($('#payments').val());
     //asuming you saving for 100 years...
     if (  payments - (price - savings*100)* interest  <= 0 )
     {
-        alert("That property is too hot for you, find something cheaper!");
+        alert("This property is too hot for you!\nFind a cheaper one, increase your mortgage payments or decrease the interest rate.");
         return;
     }
     
@@ -217,7 +217,7 @@ function populateBreakDownTable()
         $breakDown.find('tbody').last().append('<tr>'
                     + '<td>' + i + '</td>'
                     + '<td>' + numberWithCommas(interestForMonth.toFixed(2)) + '</td>'
-                    + '<td>' + numberWithCommas(principal.toFixed(2)) + '</td>'
+                    + '<td>' + numberWithCommas(principal < (stillOwing+principal) ? principal.toFixed(2) : (stillOwing+principal).toFixed(2)) + '</td>'
                     + '<td>' + numberWithCommas(totalInterestPaid.toFixed(2)) + '</td>'
                     + '<td>' + ( stillOwing < 0 ? 0 :numberWithCommas(stillOwing.toFixed(2))) + '</td>'
                     +'</tr>'); 
