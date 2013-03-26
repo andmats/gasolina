@@ -39,7 +39,7 @@ function clearDialogContactElems()
     allFields.val("").removeClass("ui-state-error");    
 }
 
-$("#dialog-contact").dialog({
+$("#dialog_contact").dialog({
     autoOpen : false,
     width : 500,
     modal : true,
@@ -59,8 +59,8 @@ $("#dialog-contact").dialog({
             }
             
             if (bValid) {
+                sendComments($("#contact_form").serialize());               
                 clearDialogContactElems();
-                sendComments($("#name").val(), $email.val(), $formContent.val());               
             }
         },
         Cancel : function() {
@@ -75,10 +75,28 @@ $("#dialog-contact").dialog({
 
 $("#report").click(function(event) {
     event.preventDefault();
-    $("#dialog-contact").dialog("open");
+    $("#dialog_contact").dialog("open");
 });
 
-function sendComments(name, email, comments)
+function sendComments(serializedData)
 {
-    
+    $.ajax({
+        url : "/feedback",
+        type : "post",
+        data : serializedData,
+        success : function() {
+            $("#dialog_contact").dialog("close");
+            $("#dialog_msg" ).attr("title", "Success");
+            $("#dialog_msg" ).html("<p>Your comments were submitted successfully.</p>")
+            $("#dialog_msg > p").css("color", "green" );
+            $("#dialog_msg" ).dialog();
+        },
+        error : function() {
+            $("#dialog_contact").dialog("close");
+            $("#dialog_msg" ).attr("title", "Error");
+            $("#dialog_msg" ).html("<p>There was an error while submitting your comments.</p>")
+            $("#dialog_msg > p").css("color", "red" );
+            $("#dialog_msg" ).dialog();
+        }
+    });
 }

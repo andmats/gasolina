@@ -28,6 +28,12 @@ class Calculation(db.Model):
     city = db.StringProperty()
     datetime = db.DateTimeProperty(auto_now_add=True)
 
+class Feedback(db.Model):
+    name = db.StringProperty()
+    email = db.StringProperty()
+    feedback = db.StringProperty()
+    datetime = db.DateTimeProperty(auto_now_add=True)
+    
 def mortgage_advisor_key():
     return db.Key.from_path('MortgageAdvisor', 'mortgage_advisor')
 
@@ -76,5 +82,23 @@ class MainPage(webapp2.RequestHandler):
             
             calc.put()
 
-app = webapp2.WSGIApplication([('/', MainPage)],
+class FeedbackPage(webapp2.RequestHandler):
+    def post(self):
+        name = self.request.get('name')
+        email = self.request.get('email')
+        feedback = self.request.get('content')
+        
+        f = Feedback(parent = mortgage_advisor_key())  
+        f.name = name
+        f.email = email
+        f.feedback = feedback
+        f.put()
+         
+class AboutPage(webapp2.RequestHandler):
+    def get(self):
+        a = 3
+        
+app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/feedback', FeedbackPage),
+                               ('/about', AboutPage)],
                               debug=True)
