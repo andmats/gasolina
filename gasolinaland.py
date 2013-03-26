@@ -1,7 +1,5 @@
-import datetime
 import webapp2
 import re
-import locale
 
 from google.appengine.ext import db
 from google.appengine.api import users

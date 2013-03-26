@@ -8,7 +8,7 @@
   </head>
   
   <body>
-  <div class="small_font">	
+   <div class="small_font">	
    <a href="/">Home</a> |
    <a href="javascript:void(0);" id="about">About</a> | 
    <a href="javascript:void(0);" id="report">Report a problem</a>
@@ -163,6 +163,34 @@
         Ultimately, this tool demonstrates how to waste as little as possible on rent & mortgage interests.
       </p>
     </div>
+    
+	<div id="dialog-contact" title="Report a problem" style="display: none;">
+	  <p>Due to severe time restraints this site may have mistakes, inaccuracies or other omissions.
+	  	 If you have spotted one of the above and feel strongly about it, you can report it and I may,
+	  	 or I may not do something about it.</p>
+	
+      <p class="validateTips"> </p>
+	  <form>
+	  <table>
+	    <tr>
+	       <td><label for="name">Name</label></td>
+	       <td><input type="text" name="name" id="name" value="" class="text ui-widget-content ui-corner-all" /></td>
+	    </tr>
+	    <tr>
+      	   <td><label for="email">Email</label></td>
+	       <td><input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" /></td>
+	    </tr>
+      </table>
+      <table>
+	    <tr>
+	       <td><label for="password">What you want to say</label></td>
+	    </tr>
+	    <tr>
+	       <td><textarea id="form_content" name="content" rows="8" cols="50" class="text ui-widget-content ui-corner-all"> </textarea></td>
+	    </tr>
+	   </table>
+	  </form>
+	</div>
     
     {% if show_results %}
     <script src="js/results.js"></script>
