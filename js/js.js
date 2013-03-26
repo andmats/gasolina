@@ -43,6 +43,9 @@ $("#dialog_contact").dialog({
     autoOpen : false,
     width : 500,
     modal : true,
+    open : function() {
+        $(this).parent().css("top", "200px");
+    },
     buttons : {
         "Submit" : function() {
             var $email = $( "#email" );
@@ -86,17 +89,21 @@ function sendComments(serializedData)
         data : serializedData,
         success : function() {
             $("#dialog_contact").dialog("close");
-            $("#dialog_msg" ).attr("title", "Success");
-            $("#dialog_msg" ).html("<p>Your comments were submitted successfully.</p>")
-            $("#dialog_msg > p").css("color", "green" );
-            $("#dialog_msg" ).dialog();
+            showPopup("Success", "Your comments were submitted successfully.", "green");
         },
         error : function() {
             $("#dialog_contact").dialog("close");
-            $("#dialog_msg" ).attr("title", "Error");
-            $("#dialog_msg" ).html("<p>There was an error while submitting your comments.</p>")
-            $("#dialog_msg > p").css("color", "red" );
-            $("#dialog_msg" ).dialog();
+            showPopup("Error", "There was an error while submitting your comments.",  "red");
         }
     });
+}
+function showPopup(title, msg, color)
+{
+    $("#dialog_msg" ).attr("title", title);
+    $("#dialog_msg" ).html("<p>" + msg + "</p>")
+    $("#dialog_msg > p").css("color", color );
+    $("#dialog_msg" ).dialog({ buttons: { "OK" : function() { $( this ).dialog( "close" ); }},    
+                               open : function() {
+                                            $(this).parent().css("top", "200px");
+                                       }});        
 }
