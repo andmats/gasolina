@@ -99,10 +99,10 @@ function sendComments(serializedData)
 }
 function showPopup(title, msg, color)
 {
-    $("#dialog_msg" ).attr("title", title);
     $("#dialog_msg" ).html("<p>" + msg + "</p>")
     $("#dialog_msg > p").css("color", color );
-    $("#dialog_msg" ).dialog({ buttons: { "OK" : function() { $( this ).dialog( "close" ); }},    
+    $("#dialog_msg" ).dialog({ title: title,
+                               buttons: { "OK" : function() { $( this ).dialog( "close" ); }},    
                                open : function() {
                                             $(this).parent().css("top", "200px");
                                        }});        

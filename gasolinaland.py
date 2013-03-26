@@ -31,7 +31,7 @@ class Calculation(db.Model):
 class Feedback(db.Model):
     name = db.StringProperty()
     email = db.StringProperty()
-    feedback = db.StringProperty()
+    feedback = db.StringProperty(multiline=True)
     datetime = db.DateTimeProperty(auto_now_add=True)
     
 def mortgage_advisor_key():
