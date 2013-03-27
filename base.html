@@ -1,0 +1,70 @@
+<html>  
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" /> 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <title>Property purchase advisor</title>
+  </head>
+  
+  <body>
+   <div id="top_bar" class="small_font">	
+   <a href="/">Home</a> |
+   <a href="/about" id="about">About</a> | 
+   <a href="javascript:void(0);" id="report">Report a problem</a>
+   </div>
+
+   <div id="content_wrap">
+       <div id="content">
+        <h1 class="center_allign">Property purchase advisor tool</h1>
+        <h2 class="center_allign">"How to waste as little as possible on rent &amp; mortgage interests"</h2>
+        <div class="content_margin"></div>
+        {% block content %}
+        {% endblock %}
+        </div>
+   </div> 
+   
+   <footer id="footer">
+   <hr>
+  	<p>Created with <a href="http://www.python.org/">Python</a>, <a href="http://jquery.com">jQuery</a> 
+  		and <a href="https://appengine.google.com/">Google App Engine</a></p>
+   </footer>
+   
+   <div id="dialog" title="About" style="display: none;">
+
+    
+	<div id="dialog_contact" title="Report a problem" style="display: none;">
+	  <p>Due to severe time restraints this site may have mistakes, inaccuracies or other omissions.
+	  	 If you have spotted one of the above and feel strongly about it, you can report it and I may,
+	  	 or I may not do something about it.</p>
+	
+      <p class="validateTips"> </p>
+	  <form id="contact_form">
+	  <table>
+	    <tr>
+	       <td><label for="name">Name</label></td>
+	       <td><input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" /></td>
+	    </tr>
+	    <tr>
+      	   <td><label for="email">Email</label></td>
+	       <td><input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all" /></td>
+	    </tr>
+      </table>
+      <table>
+	    <tr>
+	       <td><label for="password">What you want to say</label></td>
+	    </tr>
+	    <tr>
+	       <td><textarea id="form_content" name="content" rows="8" cols="50" class="ui-widget-content ui-corner-all"/></textarea></td>
+	    </tr>
+	   </table>
+	  </form>
+	</div>
+    
+    <div id="dialog_msg"></div>
+
+    <script src="js/js.js"></script>
+  </body>
+
+</html>

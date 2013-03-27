@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}           
+   <form action="/?" method="get">
+    <table id="input_table" class="green_table">
+      <th colspan="3" class="t1_header">Rent</th>
+      <tr>
+          <td>Current rent:</td>
+          <td><input id="rent" type="text" name="rent" size="6" value="{{ rent }}"></td><td><a href="javascript:void(0);">[?]</a></td>
+      </tr>
+      <tr>
+          <td>Monthly savings:</td> 
+          <td><input id="savings" type="text" name="savings" size="6" value="{{ savings }}"></td><td><a href="javascript:void(0);">[?]</a></td>
+      </tr>
+      <th colspan="3" class="t1_header">Mortgage</th>
+      <tr>
+          <td>Interest rate:</td>
+          <td> <input id="interest" type="text" name="interest" size="2" value="{{ 4.50 if interest is not defined else interest}}"></td>
+          <td><a href="javascript:void(0);">[?]</a></td>
+      </tr>
+      <tr>
+          <td>Monthly payments:</td>
+          <td> <input id="payments" type="text" name="payments" size="6" value="{{ payments }}"></td>
+          <td><a href="javascript:void(0);">[?]</a></td>
+      </tr>
+      <tr><td>Payments:</td><td>
+      <select name="payment_types">
+          <option value="monthly">Monthly</option>
+      </select></td></tr>
+      <th colspan="3" class="t1_header">Property</th>
+      <tr>
+          <td>Property price:</td><td> <input id="price" type="text" name="price" size="7" value="{{ price }}"></td>
+          <td><a href="javascript:void(0);">[?]</a></td>
+      </tr>
+      <tr><td> </td></tr>
+      <tr><td colspan="2">
+            <input type="checkbox" name="public" {{ "checked" if public or (not show_results) else "" }}>
+            <span class="small_font">Make my results public</span>
+       </td></tr>
+      <tr><td><input type="submit" value="Calculate"></td>
+     </table>
+    </form>
+
+    {% if show_results %}
+        <script>$("#input_table").css('margin-left', "1.5em");</script>    
+        <div>
+            <table class="red_table_brief"> 
+            <th class="t2_header" colspan="2">Results (in brief)</th>
+            <tr><th class="t2_header" colspan="2">Rent</th></tr>
+            <tr><td>Total paid:</td><td class="rent_paid res"> </td></tr>
+            <tr><td>Duration:</td><td class="rent_duration res"> </td></tr>
+            <th class="t2_header" colspan="2">Mortgage</th>
+            <tr><td>Total interest paid:</td><td class="interest_paid res"> </td></tr>
+            <tr><td>Mortgage duration:</td><td class="mortgage_duration res"> </td></tr>
+            <tr><td colspan="2"> </td></tr>
+            <tr><th class="t2_header" colspan="2">Total "wasted" money</th></tr>
+            <tr><td colspan="2" class="center_allign">
+                <span class="total_wasted res"></span>
+                <span id="sum_of_costs_str" class="res"></span>
+            </td></tr>
+        </table>
+    {% endif %}
+    
+    <div style="clear:both"> </div> <!-- because of the previous floating tables/divs  -->    
+    
+    {% if show_results %}
+            <table class="red_table_explained">
+            <th class="t2_header">Results (explained)</th>
+            <tr><td>The most cost efficient strategy for you is:
+                <ul>
+                <li>Continue renting for another <span class="rent_duration res"> </span>.</li>
+                <li>By the end of this period you will have paid a total of <span class="rent_paid res"> </span> on rent and saved <span class="total_saved res"> </span>.</li>
+                <li>Using that, you can buy the property by making a mortgage of <span class="mortage_pricipal res"> </span>. </li>
+                <li>You will repay it after <span class="mortgage_duration res"> </span>.</li>
+                <li>The total interest you'll pay is <span class="interest_paid res"> </span>.</li>
+                <li>Eventually, the <span style="font-style: italic;">minimum</span> total rent and interest you'll pay is <span class="total_wasted res"> </span>.</li>
+                </ul></td></tr>
+            </table>
+        </div>
+    {% endif %}
+    
+    
+    {% if show_results %}
+    <div id="chart_div" style="width: 50em; height: 500px;"> </div>
+    
+    <p> The chart above shows your total expenses compared to when you get your mortgage, 
+        as you continue to save money while you're renting. </p>
+    <div class="top_distance">      
+        <a href="javascript:void(0);" id="show_breakdown">Show mortgage breakdown</a> 
+        <table id="mortgage_breakdown" style="display: none;">
+            <thead>
+                <th class="t4_header" colspan="5">Mortgage breakdown</th>
+                <tr><th>Month</th>
+                    <th>Interest paid</th>
+                    <th>Principal paid</th>
+                    <th>Cumulative interest paid</th>
+                    <th>Remaining debt</th>
+                </tr>
+            </thead>
+            <tbody/>
+        </table>
+        <a href="javascript:void(0);" id="hide_breakdown_under" style="display: none;">Hide mortgage breakdown</a> 
+    </div>
+    
+    {% endif %}
+    {{calculations}}    
+    <table id="table_recent_calcs">
+        <th class="t3_header" colspan="7">Most recent calculations</th>
+        <tr><th class="t3_header" colspan="2">Rent</th><th class="t3_header" colspan="2">Mortgage</th><th class="t3_header">Property</th><th class="t3_header" colspan="2">Date/Location</tr>
+        <tr><th>Rent</th><th>Savings</th><th>Interest rate</th><th>Payments</th>
+            <th>Price</th><th>Date</th><th>City</th></tr>
+        
+        {% for c in calculations %}
+        <tr><td>{{(c.rent~"") | number_format}}</td>
+            <td>{{(c.savings~"") | number_format}}</td>
+            <td>{{(c.interest~"") | number_format}}</td>
+            <td>{{(c.payments~"") | number_format}}</td>
+            <td>{{(c.price ~ "") | number_format}}</td>
+            <td>{{c.datetime.strftime('%Y-%m-%d')}}</td>
+            <td>{{c.city}}</td></tr>
+        {% endfor %}
+    </table>
+        
+    {% if show_results %}
+    <script src="js/results.js"></script>
+    {% endif %}
+{% endblock %}

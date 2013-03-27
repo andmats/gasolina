@@ -67,7 +67,7 @@ class MainPage(webapp2.RequestHandler):
         else:
             template_values = {'calculations': calcs}
 
-        template = jinja_environment.get_template('index.html')
+        template = jinja_environment.get_template('content.html')
         self.response.out.write(template.render(template_values))
 
         if price:
@@ -96,7 +96,9 @@ class FeedbackPage(webapp2.RequestHandler):
          
 class AboutPage(webapp2.RequestHandler):
     def get(self):
-        a = 3
+        template = jinja_environment.get_template('about.html')
+        self.response.out.write(template.render())
+
         
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/feedback', FeedbackPage),
