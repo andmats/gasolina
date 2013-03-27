@@ -54,6 +54,19 @@ class MainPage(webapp2.RequestHandler):
         public = self.request.get('public')
         
         if price:
+            calc = Calculation( parent = mortgage_advisor_key() )    
+            calc.interest = float(interest)
+            calc.rent = float(rent)
+            calc.savings = float(savings)
+            calc.payments = float(payments)
+            calc.price = float(price)
+            calc.public = True if public == "on" else False
+            try:
+                calc.city = self.request.headers['X-AppEngine-City'].title()
+            except KeyError as ex:
+                print "Exception in MainPage: ", ex
+            calc.put()
+
             template_values = {
                 'show_results': True,
                 'interest': interest,
@@ -70,17 +83,6 @@ class MainPage(webapp2.RequestHandler):
         template = jinja_environment.get_template('content.html')
         self.response.out.write(template.render(template_values))
 
-        if price:
-            calc = Calculation( parent = mortgage_advisor_key() )    
-            calc.interest = float(interest)
-            calc.rent = float(rent)
-            calc.savings = float(savings)
-            calc.payments = float(payments)
-            calc.price = float(price)
-            calc.public = True if public == "on" else False
-            calc.city = self.request.get('X-AppEngine-City')
-            
-            calc.put()
 
 class FeedbackPage(webapp2.RequestHandler):
     def post(self):
