@@ -5,22 +5,24 @@
       <th colspan="3" class="t1_header">Rent</th>
       <tr>
           <td>Current rent:</td>
-          <td><input id="rent" type="text" name="rent" size="6" value="{{ rent }}"></td><td><a href="javascript:void(0);">[?]</a></td>
+          <td><input id="rent" type="text" name="rent" size="6" value="{{ rent }}"></td>
+          <td><a class="help" href="javascript:void(0);">[?]</a></td>
       </tr>
       <tr>
           <td>Monthly savings:</td> 
-          <td><input id="savings" type="text" name="savings" size="6" value="{{ savings }}"></td><td><a href="javascript:void(0);">[?]</a></td>
+          <td><input id="savings" type="text" name="savings" size="6" value="{{ savings }}"></td>
+          <td><a class="help" href="javascript:void(0);">[?]</a></td>
       </tr>
       <th colspan="3" class="t1_header">Mortgage</th>
       <tr>
           <td>Interest rate:</td>
           <td> <input id="interest" type="text" name="interest" size="2" value="{{ 4.50 if interest is not defined else interest}}"></td>
-          <td><a href="javascript:void(0);">[?]</a></td>
+          <td><a class="help" href="javascript:void(0);">[?]</a></td>
       </tr>
       <tr>
           <td>Monthly payments:</td>
           <td> <input id="payments" type="text" name="payments" size="6" value="{{ payments }}"></td>
-          <td><a href="javascript:void(0);">[?]</a></td>
+          <td><a class="help" href="javascript:void(0);">[?]</a></td>
       </tr>
       <tr><td>Payments:</td><td>
       <select name="payment_types">
@@ -29,7 +31,7 @@
       <th colspan="3" class="t1_header">Property</th>
       <tr>
           <td>Property price:</td><td> <input id="price" type="text" name="price" size="7" value="{{ price }}"></td>
-          <td><a href="javascript:void(0);">[?]</a></td>
+          <td><a class="help" href="javascript:void(0);">[?]</a></td>
       </tr>
       <tr><td> </td></tr>
       <tr><td colspan="2">

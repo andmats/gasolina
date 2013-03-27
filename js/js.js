@@ -94,3 +94,24 @@ function showPopup(title, msg, color)
                                             $(this).parent().css("top", "200px");
                                        }});        
 }
+
+$('.help').click(function(event) {
+   event.preventDefault();
+   
+    $("#dialog_msg" ).html(
+        "<p><b>Rent:</b> This is the amount of monthly rent you pay currently.</p>"
+      + "<p><b>Savings:</b> This is how much you save per month currently.</p>"
+      + "<p><b>Interest rate:</b> This is the yearly fixed interest rate at which you will get the mortgage.</p>"
+      + "<p><b>Monthly payments:</b> This is how much you want to pay per month to repay your mortgage. "
+      +                             "The more you pay monthly, the less interest you'll have to pay.</p>" 
+      + "<p><b>Property price:</b> This is how much the property you want to buy is worth. "
+      +                            "If you already have savings that you want to use towards the purchase of this property, "
+      +                            "enter only the remaining money you have to pay.</p>"); 
+      
+    $("#dialog_msg" ).dialog({ title: "Help",
+                           width : 350,
+                           buttons: { "OK" : function() { $( this ).dialog( "close" ); }},    
+                           open : function() {
+                                        $(this).parent().css("top", "200px");
+                                   }});        
+});
