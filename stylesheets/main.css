@@ -110,3 +110,7 @@ hr {
 .res {
     font-weight: bold;
 }
+
+.total_wasted {
+    color: red;
+}

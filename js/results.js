@@ -163,6 +163,7 @@ function showResults(optN)
     $('.rent_duration').text(convertToYears(optN));
     $('.rent_paid').text(numberWithCommas((rent*optN).toFixed(2)));
     $('.total_saved').text(numberWithCommas((savings*optN).toFixed(2)));
+    $('#sum_of_costs_str').text("("+$('.rent_paid').first().text() + " + " + $('.interest_paid').first().text()+")");
 }
 
 

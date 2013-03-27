@@ -75,7 +75,10 @@
         <tr><td>Mortgage duration:</td><td class="mortgage_duration res"> </td></tr>
         <tr><td colspan="2"> </td></tr>
         <tr><th class="t2_header" colspan="2">Total "wasted" money</th></tr>
-        <tr><td colspan="2" class="total_wasted res center_allign" style="color:red"> </td></tr>
+        <tr><td colspan="2" class="center_allign">
+            <span class="total_wasted res"></span>
+            <span id="sum_of_costs_str" class="res"></span>
+        </td></tr>
         </table>
     {% endif %}
     
@@ -91,7 +94,7 @@
             <li>Using that, you can buy the property by making a mortgage of <span class="mortage_pricipal res"> </span>. </li>
             <li>You will repay it after <span class="mortgage_duration res"> </span>.</li>
             <li>The total interest you'll pay is <span class="interest_paid res"> </span>.</li>
-            <li>Minimum total rent and interest: <span class="total_wasted res"> </span>.</li>
+            <li>Eventually, the <span style="font-style: italic;">minimum</span> total rent and interest you'll pay is <span class="total_wasted res"> </span>.</li>
             </ul></td></tr>
         </table>
         </div>
